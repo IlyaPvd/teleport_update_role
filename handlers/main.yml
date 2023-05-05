@@ -1,0 +1,25 @@
+---
+# handlers file for teleport_update
+- name: Restart Teleport service
+  systemd:
+    name: teleport
+    state: restarted
+  when: teleport_service_enabled | default(false)
+  register: teleport_service_result
+
+- name: Restart {{ second_service_name }} service
+  systemd:
+    name: "{{ second_service_name }}"
+    state: restarted
+  when: teleport_service_enabled and second_service_enabled
+  register: second_service_result
+
+- name: Output a message if teleport service was successfully restarted
+  debug:
+    msg: "Service teleport was successfully restarted"
+  when: teleport_service_result.changed == true
+
+- name: Output a message if {{ second_service_name }} service was successfully restarted
+  debug:
+    msg: "Service {{ second_service_name }} was successfully restarted"
+  when: second_service_result.changed == true

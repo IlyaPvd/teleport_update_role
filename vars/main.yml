@@ -1,0 +1,5 @@
+---
+# vars file for teleport_update
+# teleport_service_enabled: false
+# second_service_enabled: false
+# second_service_name: app_teleport 
