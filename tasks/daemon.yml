@@ -6,11 +6,6 @@
   # changed_when: false
   # failed_when: false
 
-- name: Print systemctl_output.stdout
-  debug:
-    msg: "{{ systemctl_output.stdout }}"
-  when: systemctl_output.changed == true
-
 - name: Reload systemd daemon
   command: systemctl daemon-reload
-  when: "'systemctl daemon-reload' in systemctl_output.stdout"
+  when: "'systemctl daemon-reload' in systemctl_output.stderr"
