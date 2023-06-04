@@ -1,5 +1,20 @@
 ---
 # handlers file for teleport_update
+- name: Check if systemctl daemon-reload is required
+  command: systemctl status teleport
+  register: systemctl_output
+  changed_when: false
+  failed_when: false
+
+- name: Print systemctl_output.stdout
+  debug:
+    msg: "{{ systemctl_output.stdout }}"
+  when: systemctl_output.changed == true
+
+- name: Reload systemd daemon
+  command: systemctl daemon-reload
+  when: "'systemctl daemon-reload' in systemctl_output.stdout"
+
 - name: Restart Teleport service
   systemd:
     name: teleport

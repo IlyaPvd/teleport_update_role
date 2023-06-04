@@ -38,6 +38,7 @@
     state: latest
   when: teleport_upgrade_output.rc == 0
   notify:
+    - Check if systemctl daemon-reload is required
     - Restart {{ second_service_name }} service 
     - Restart Teleport service
   register: teleport_upgrade_result 
