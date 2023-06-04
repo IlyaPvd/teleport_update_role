@@ -54,3 +54,5 @@
   debug:
     msg: "Teleport package upgraded to version {{ teleport_version.stdout }}"
   when: teleport_upgrade_result.changed and teleport_version.stdout is defined
+
+- include_tasks: daemon.yml
